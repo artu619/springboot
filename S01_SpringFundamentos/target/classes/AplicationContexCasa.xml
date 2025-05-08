@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!-- Para dar de alta un contexto de spring por XML, usaremos un fichero 
+		de este tipo, y lo llamaremos desde la app. 
+		
+		Dentro de este fichero podremos dar de alta todos los beans que queramos dentro de 
+		nuestro contexto de Spring. 
+		
+		En este ejemplo solo vamos a tener un bean creado a partir de la clase ejemplo01.Mensaje. 
+		Para dar de alta un bean en el contexto de spring usaremos la etiqueta "bean" 
+		y tendrá que tener al menos un identificador del bean "id", y la class que 
+		tiene que usar Spring para instanciar el objeto De manera basica, debemos 
+		de tener en la clase el constructor sin parametros 
+		
+		El ciclo de vida de los beans en Spring es por defecto de tipo "Singleton" que 
+		se traduce en que el objeto sera unico para toda la duracion del contexto de spring. 
+		
+		Hablaremos de otros ciclos de vida más adelante -->
+		
+		
+<!-- Propietario  -->
+    <bean id="propietario" class="es.curso.springcasa.Persona">
+        <property name="nombre" value="Juan Pérez"/>
+        <property name="dni" value="12345678A"/>
+        <property name="telefono" value="600123123"/>
+    </bean>
+
+    <!-- Dirección del inquilino -->
+    <bean id="direccionInquilino1" class="es.curso.springcasa.Direccion">
+        <property name="tipoVia" value="Calle"/>
+        <property name="nombreVia" value="Luna"/>
+        <property name="codigoPostal" value="02003"/>
+        <property name="numero" value="3"/>
+    </bean>
+
+    <!-- Inquilino con dirección -->
+    <bean id="inquilino1" class="es.curso.springcasa.Persona">
+        <property name="nombre" value="Ana Gómez"/>
+        <property name="dni" value="87654321B"/>
+        <property name="telefono" value="611222333"/>
+        <property name="direccion" ref="direccionInquilino1"/>
+    </bean>
+
+    <bean id="listaInquilinos" class="java.util.ArrayList">
+        <constructor-arg>
+            <list>
+                <ref bean="inquilino1"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <!-- Habitaciones -->
+    <bean id="habitacion1" class="es.curso.springcasa.Habitacion">
+        <property name="metrosCuadrados" value="12.5"/>
+        <property name="tipo" value="Dormitorio"/>
+        <property name="numero" value="1"/>
+    </bean>
+
+    <bean id="habitacion2" class="es.curso.springcasa.Habitacion">
+        <property name="metrosCuadrados" value="10.0"/>
+        <property name="tipo" value="Baño"/>
+        <property name="numero" value="2"/>
+    </bean>
+
+    <bean id="listaHabitaciones" class="java.util.ArrayList">
+        <constructor-arg>
+            <list>
+                <ref bean="habitacion1"/>
+                <ref bean="habitacion2"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <!-- Dirección de la casa -->
+    <bean id="direccionCasa" class="es.curso.springcasa.Direccion">
+        <property name="tipoVia" value="Calle"/>
+        <property name="nombreVia" value="Mayor"/>
+        <property name="codigoPostal" value="02001"/>
+        <property name="numero" value="12"/>
+    </bean>
+
+    <!-- Casa -->
+    <bean id="casa" class="es.curso.springcasa.Casa">
+        <property name="direccion" ref="direccionCasa"/>
+        <property name="propietario" ref="propietario"/>
+        <property name="inquilinos" ref="listaInquilinos"/>
+        <property name="habitaciones" ref="listaHabitaciones"/>
+        <property name="precioAlquiler" value="650.0"/>
+    </bean>
+
+    <!-- Alquiler -->
+    <bean id="alquiler" class="es.curso.springcasa.Alquiler">
+        <property name="casa" ref="casa"/>
+        <property name="inquilinos" ref="listaInquilinos"/>
+        <property name="fechaInicio" value="2025-06-01"/>
+        <property name="fechaFin" value="2026-06-01"/>
+        <property name="precioTotal" value="7800.0"/>
+    </bean>
+
+
+</beans>
+	
+
