@@ -21,83 +21,74 @@
 		Hablaremos de otros ciclos de vida más adelante -->
 		
 		
- <!-- Propietario (sin dirección) -->
-    <bean id="propietario" class="es.curso.springcasa.Persona">
-        <property name="nombre" value="Juan Pérez"/>
-        <property name="dni" value="12345678A"/>
-        <property name="telefono" value="600123123"/>
-    </bean>
-
-    <!-- Dirección del inquilino -->
-    <bean id="direccionInquilino1" class="es.curso.springcasa.Direccion">
-        <property name="tipoVia" value="Calle"/>
-        <property name="nombreVia" value="Luna"/>
-        <property name="codigoPostal" value="02003"/>
-        <property name="numero" value="3"/>
-    </bean>
-
-    <!-- Inquilino con dirección -->
-    <bean id="inquilino1" class="es.curso.springcasa.Persona">
-        <property name="nombre" value="Ana Gómez"/>
-        <property name="dni" value="87654321B"/>
-        <property name="telefono" value="611222333"/>
-        <property name="direccion" ref="direccionInquilino1"/>
-    </bean>
-
-    <bean id="listaInquilinos" class="java.util.ArrayList">
-        <constructor-arg>
-            <list>
-                <ref bean="inquilino1"/>
-            </list>
-        </constructor-arg>
-    </bean>
-
-    <!-- Habitaciones -->
-    <bean id="habitacion1" class="es.curso.springcasa.Habitacion">
-        <property name="metrosCuadrados" value="12.5"/>
-        <property name="tipo" value="Dormitorio"/>
-        <property name="numero" value="1"/>
-    </bean>
-
-    <bean id="habitacion2" class="es.curso.springcasa.Habitacion">
-        <property name="metrosCuadrados" value="10.0"/>
-        <property name="tipo" value="Baño"/>
-        <property name="numero" value="2"/>
-    </bean>
-
-    <bean id="listaHabitaciones" class="java.util.ArrayList">
-        <constructor-arg>
-            <list>
-                <ref bean="habitacion1"/>
-                <ref bean="habitacion2"/>
-            </list>
-        </constructor-arg>
-    </bean>
-
-    <!-- Dirección de la casa -->
     <bean id="direccionCasa" class="es.curso.springcasa.Direccion">
-        <property name="tipoVia" value="Calle"/>
-        <property name="nombreVia" value="Mayor"/>
-        <property name="codigoPostal" value="02001"/>
-        <property name="numero" value="12"/>
+        <property name="tipoVia" value="Calle" />
+        <property name="nombreVia" value="Mayor" />
+        <property name="codigoPostal" value="02001" />
+        <property name="numero" value="12" />
     </bean>
 
-    <!-- Casa -->
+    <!-- Bean de la casa con habitaciones -->
     <bean id="casa" class="es.curso.springcasa.Casa">
-        <property name="direccion" ref="direccionCasa"/>
-        <property name="propietario" ref="propietario"/>
-        <property name="habitaciones" ref="listaHabitaciones"/>
-        <property name="precioAlquiler" value="600.0"/>
+        <property name="direccion" ref="direccionCasa" />
+        
+        <property name="habitaciones">
+            <list>
+                <bean class="es.curso.springcasa.Habitacion">
+                    <property name="metrosCuadrados" value="15.5" />
+                    <property name="tipo" value="Dormitorio" />
+                    <property name="numero" value="1" />
+                </bean>
+                <bean class="es.curso.springcasa.Habitacion">
+                    <property name="metrosCuadrados" value="10.0" />
+                    <property name="tipo" value="Baño" />
+                    <property name="numero" value="2" />
+                </bean>
+                <bean class="es.curso.springcasa.Habitacion">
+                    <property name="metrosCuadrados" value="20.0" />
+                    <property name="tipo" value="Salón" />
+                    <property name="numero" value="3" />
+                </bean>
+            </list>
+        </property>
+
+        <property name="propietario">
+            <bean class="es.curso.springcasa.Persona">
+                <property name="nombre" value="Juan López" />
+                <property name="dni" value="12345678A" />
+                <property name="telefono" value="600123456" />
+            </bean>
+        </property>
+
+        <property name="precioAlquiler" value="850.0" />
     </bean>
 
-    <!-- Alquiler -->
-    <bean id="alquiler" class="es.curso.springcasa.Alquiler">
-        <property name="casa" ref="casa"/>
-        <property name="inquilinos" ref="listaInquilinos"/>
-        <property name="fechaInicio" value="2025-05-01"/>
-        <property name="fechaFin" value="2025-11-01"/>
-        <property name="precioTotal" value="3600.0"/>
+    <!-- Lista de inquilinos -->
+    <bean id="inquilino1" class="es.curso.springcasa.Persona">
+        <property name="nombre" value="María Ruiz" />
+        <property name="dni" value="98765432Z" />
+        <property name="telefono" value="666987654" />
     </bean>
+
+    <bean id="inquilino2" class="es.curso.springcasa.Persona">
+        <property name="nombre" value="Luis Martínez" />
+        <property name="dni" value="11223344B" />
+        <property name="telefono" value="644112233" />
+    </bean>
+
+    <!-- Bean del alquiler -->
+    <bean id="alquiler" class="es.curso.springcasa.Alquiler">
+        <property name="casa" ref="casa" />
+        <property name="inquilinos">
+            <list>
+                <ref bean="inquilino1" />
+                <ref bean="inquilino2" />
+            </list>
+        </property>
+        <property name="fechaInicio" value="2024-06-01" />
+        <property name="fechaFin" value="2025-06-01" />
+        <property name="precioTotal" value="10200.0" />
+    </bean> 
 
 
 </beans>

@@ -20,11 +20,14 @@ public class Main {
                 alquiler.getCasa().getDireccion().getCodigoPostal() + " " +
                 alquiler.getCasa().getDireccion().getNumero());
         System.out.println("Precio de alquiler: " + alquiler.getCasa().getPrecioAlquiler() + " €");
+        System.out.println("Número de habitaciones: " + alquiler.getCasa().getHabitaciones().size());
+        System.out.println("Metros cuadrados totales: " + alquiler.getCasa().getMetrosCuadradosTotales() + " m²");
 
         System.out.println("\nPropietario: ");
         System.out.println("Nombre: " + alquiler.getCasa().getPropietario().getNombre());
         System.out.println("DNI: " + alquiler.getCasa().getPropietario().getDni());
         System.out.println("Teléfono: " + alquiler.getCasa().getPropietario().getTelefono());
+        
 
         System.out.println("\nInquilinos: ");
         for (Persona inquilino : alquiler.getInquilinos()) {

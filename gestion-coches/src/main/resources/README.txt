@@ -1,0 +1,1 @@
+Esta carpeta es para archivos de recursos (por ejemplo, configuraciones, datos, etc.).
