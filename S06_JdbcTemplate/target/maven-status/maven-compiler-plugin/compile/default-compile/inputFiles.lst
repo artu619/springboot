@@ -1,0 +1,8 @@
+/Users/alexbometon/Documents/material_java/04_WsCursoSpring-master/07_JdbcTemplate/src/main/java/es/curso/config/Configuracion.java
+/Users/alexbometon/Documents/material_java/04_WsCursoSpring-master/07_JdbcTemplate/src/main/java/es/curso/main/MainCrearTabla.java
+/Users/alexbometon/Documents/material_java/04_WsCursoSpring-master/07_JdbcTemplate/src/main/java/es/curso/main/MainJdbcTemplate.java
+/Users/alexbometon/Documents/material_java/04_WsCursoSpring-master/07_JdbcTemplate/src/main/java/es/curso/modelo/entidades/Pelicula.java
+/Users/alexbometon/Documents/material_java/04_WsCursoSpring-master/07_JdbcTemplate/src/main/java/es/curso/modelo/negocio/GestorPelicula.java
+/Users/alexbometon/Documents/material_java/04_WsCursoSpring-master/07_JdbcTemplate/src/main/java/es/curso/modelo/persistencia/DaoPelicula.java
+/Users/alexbometon/Documents/material_java/04_WsCursoSpring-master/07_JdbcTemplate/src/main/java/es/curso/modelo/persistencia/DaoPeliculaJdbcTemplate.java
+/Users/alexbometon/Documents/material_java/04_WsCursoSpring-master/07_JdbcTemplate/src/main/java/es/curso/modelo/persistencia/DaoPeliculaRowMapper.java

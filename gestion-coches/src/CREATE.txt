@@ -1,0 +1,49 @@
+CREATE TABLE IF NOT EXISTS usuario (
+id INT PRIMARY KEY AUTO AUTO_INCREMENT
+	nombre1 VARCHAR (50) UNIQUE NOT NULL,
+	nombre2 VARCAR (50) NULL,
+	apellido1 VARCHAR(50) NOT NULL,
+	apellido2 VARCHAR (50) NULL
+	dni VARCHAR(50) NOT NULL UNIQUE,
+	CONSTRAINT check_dni CHECK(dni REGXP '^[0-9]{8}[a-]$')
+	CONSTRAINT check_nombre1_length (CHART_L
+
+);
+CREATE TABLE IF NOT EXISTS alumnos (
+	id INT PRIMARY KEY AUTO AUTO_INCREMENT
+	Nombre VARCHAR  (50) NOT NULL ,
+	apellido VARCHAR (50) NOT NULL ,
+	fecha_nacimentos DATE NOT NULL ,
+	email VARCHAR (100) NOT NULL NUL UNIQUE
+	
+	
+)
+
+CREATE TABLE IF NOT EXISTS productos (
+	id INT PRIMARY KEY AUTO 
+	cod_bara  CHAR(13) NOT NULL UNIQUE,
+	precio DECIMAL(8, 2) NOT NULL ,
+	nonbre NOT NULL ,
+	fecha_env DATETIME NOT NULL ,
+	fecha_cad DATATIME NOT NULL ,
+	marca VARCHAR (50) NOT NULL,
+	provedor VARCHAR (50) NOT NULL,
+	seccion VARCHAR (50) NO NULL
+	
+
+);
+
+CREATE TABLE IF NOT EXISTS clientes (
+  clientes_id INT PRIMARY KEY AUTO_INCREMENT,
+  nombre VARCHAR(50) NOT NULL,
+  email VARCHAR(250) UNIQUE NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS pedidos (
+  pedidos_id INT PRIMARY KEY AUTO_INCREMENT,
+  fecha DATE NOT NULL,
+  clientes_id INT,
+  precio DECIMAL NOT NULL,
+  FOREIGN KEY (clientes_id) REFERENCES clientes(clientes_id)  
+);	
+	

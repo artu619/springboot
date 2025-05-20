@@ -1,0 +1,8 @@
+es/curso/modelo/persistencia/DaoPelicula.class
+es/curso/modelo/entidades/Pelicula.class
+es/curso/modelo/persistencia/DaoPeliculaRowMapper.class
+es/curso/main/MainJdbcTemplate.class
+es/curso/modelo/negocio/GestorPelicula.class
+es/curso/config/Configuracion.class
+es/curso/main/MainCrearTabla.class
+es/curso/modelo/persistencia/DaoPeliculaJdbcTemplate.class

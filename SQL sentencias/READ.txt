@@ -1,0 +1,368 @@
+Operaciones CRUD
+================
+
+Acciones básicas sobre una base de datos o una estructura de almacenamiento de datos 
+o una estructura de almacenamiento de datos.
+
+CRUD solo se refiere a los datos dentro de las tablas, no a las tablas en sí.
+
+----READ----
+------------
+
+Se usa para leer o recuperar datos existentes de la base de datos.
+
+Query
+-----
+
+Sentencia SELECT, es una sentencia tan importante dentro de SQL que tiene su propio nombre.
+Permite leer o recuperar datos.
+
+
+1. Todos los campos de la tabla customers.
+--Esto es lo correcto para SQL
+SELECT *
+FROM customers;
+
+--En Java damos la query con una String y si cabe en una línea mejor
+SELECT * FROM customers;
+
+2. Muestra nombre y email de la tabla cliente.
+--En SQL
+SELECT
+	nombre,
+	email
+FROM cliente;
+
+--En Java...
+SELECT nombre, email FROM cliente;
+
+3. id, order_date de la tabla orders.
+--En SQL
+SELECT
+	id,
+	order_date
+FROM orders;
+
+--En Java...
+SELECT id, order_date FROM orders;
+
+4. Muestra los productos (name) cuyo precio (price) sea menor de 20.
+SELECT
+	name AS producto,
+	price AS precio
+FROM producto
+WHERE precio < 20;
+
+5. Listar todos los pedidos (id) que tengan el estado (status) "shipped".
+SELECT id
+FROM pedidos
+WHERE status = "shipped"
+
+
+5.1. Listar todos los pedidos (id) que tengan el estado (status) "shipped"/"resolved".
+SELECT id
+FROM pedidos
+WHERE status IN ("shipped", "resolved");
+
+SELECT id
+FROM pedidos
+WHERE status = "shipped"
+	OR status = "resolved";
+	
+6. Muestra el nombre (name) de los clientes que viven en France (country)
+SELECT name AS nombre
+FROM customers
+WHERE country = "France";
+
+6.1 Muestra el nombre (name) de los clientes que viven en France (country)
+La tabla de paises tiene las siguientes columnas "country_id", "country"
+La tabla de clientes tiene las siguientes columnas "customer_id", "name", "country_id", "city_id"
+
+SELECT 
+	customer.name AS cliente,
+	country.country AS pais
+FROM customer
+JOIN country
+	ON customer.country_id = country.country_id
+WHERE country.country = "France";
+
+--Aparción de los ALIAS
+SELECT
+	cus.name,
+	cou.country
+FROM customer AS cus
+JOIN country AS cou
+	ON cus.country_id = cou.country_id
+WHERE cou.country = "France";
+
+6.2 Muestra el nombre (name) de los clientes que viven en France (country), en la ciudad (city) de París.
+La tabla de paises tiene las siguientes columnas "country_id", "country"
+La tabla de clientes tiene las siguientes columnas "customer_id", "name", "country_id", "city_id"
+La tabla de ciudades tiene las siguientes columnas "city_id", "city", "country_id"
+
+SELECT
+	cus.name,
+	cou.country,
+	ci.city
+FROM customer AS cus
+JOIN country AS cou
+	ON cus.country_id = cou.country_id
+JOIN city AS ci
+	ON ci.country_id = cou.country_id
+WHERE cou.country = "France"
+	AND ci.city = "Paris";
+	
+7. Lista todos los productos (product) de la categoría "Electronics" (tabla product).
+
+SELECT DISTINCT
+	product
+FROM product
+WHERE category = "Electronics";
+
+8. Muestra los pedidos (id), con un total (amount) entre 50 y 150.
+
+SELECT
+	id
+FROM pedidos
+WHERE amount >= 50
+	AND amount <= 150;
+	
+	
+SELECT id
+FROM pedidos
+WHERE amount BETWEEN 50 AND 150; 
+
+9. Listar el email de los clientes (customer_id) cuyo nombre (first_name) 
+empiece por A y su apellido (last_name) acabe por T.
+
+SELECT
+	customer_id AS cliente,
+	email
+FROM clientes
+WHERE first_name LIKE "A%"
+	AND last_name LIKE "%T";
+
+10. Mostrar nombre(name) y precio(price) de los productos ordenados según su precio se mayor a menor.
+
+SELECT
+	name,
+	price
+FROM products
+ORDER BY price DESC; -- si le damos descendente los valores más altos aparecerán primero.
+
+===NIVEL INTERMEDIO===
+FUNCIONES DE AGREGACION
+MAX(columna) -- valor máximo
+MIN(columna) -- valor mínimo
+SUM(columna) -- suma de toda la columna
+AVG(columna) -- media de la columna
+COUNT(columna) -- cuenta cantidad de registros
+
+GROUP BY
+
+| producto | facturación |
+| coche    | 100
+| bici     | 150
+| triciclo | 30
+| coche    | 80
+| coche    | 100
+
+
+SELECT
+	producto,
+	SUM(facturacion)
+FROM tabla;
+
+| producto | facturación | -- ERROR: no puedo tener diferentes registros en las columnas
+| coche    | 460
+| bici     | 
+| triciclo | 
+| coche    | 
+| coche    | 
+
+
+SELECT
+	producto,
+	SUM(facturacion)
+FROM tabla
+GROUP BY producto; -- me coge los valores de producto y sumará todos los registros para
+					  cada valor de la columna facturación
+
+| producto | facturación |
+| coche    | 280
+| bici     | 150
+| triciclo | 30
+
+1. Tabla cliente: cliente_id, nombre, apellido, pais_id
+tabla pedidos: pedido_id, unidades, total_factura, cliente_id
+tabla paises: pais_id, pais
+El nombre del cliente y la suma total de sus pedidos para los clientes que viven en "España"
+
+SELECT
+	cliente.cliente_id,
+	cliente.nombre,
+	SUM(pedidos.total_factura)
+FROM cliente
+JOIN pedidos
+	ON cliente.cliente_id = pedidos.cliente_id
+JOIN paises
+	ON paises.pais_id = cliente.pais_id
+WHERE pais = "España"
+GROUP BY cliente.cliente_id, cliente.nombre;
+
+2. Listar los 3 clientes con mayor importe total de pedidos.
+SELECT
+	cliente.cliente_id,
+	cliente.nombre,
+	SUM(pedidos.importe) AS importe_total
+FROM cliente
+JOIN pedidos
+	ON cliente.cliente_id = pedidos.cliente_id
+GROUP BY cliente.cliente_id, cliente.nombre
+ORDER BY total_pedidos DESC
+LIMIT 3;
+
+3. Mostrar, para cada categoría (categoria) de producto, el precio medio de los productos.
+SELECT
+	categoria,
+	AVG(precio) AS precio_medio
+FROM productos
+GROUP BY categoria;
+
+4. tabla clientes: cliente_id, nombre_completo
+tabla pedidos: pedido_id, importe, cliente_id
+Muestra los clientes con un gasto superior a 500€.
+(uso de WHERE y de HAVING)
+
+SELECT
+	cliente_id,
+	nombre_completo,
+	-- pedido_id, -- ESTA NO, 
+	SUM(importe) AS importe_total
+FROM clientes AS c
+JOIN pedidos AS p
+	ON c.cliente_id = p.cliente_id
+GROUP BY c.cliente_id, c.nombre_completo
+HAVING SUM(importe) > 500; 				-- NO HAY HAVING si no tengo GROUP BY
+
+5. tabla productos:n producto_id, categoria_id
+tabla categorias: categoria_id, categoria
+tabla pedidos: pedido_id, producto_id, cantidad
+
+Muestra la media de CANTIDAD pedida por producto y categoría.
+
+SELECT
+	c.categoria,
+	p.producto_id,
+	AVG(o.cantidad) AS media_cantidad
+FROM pedidos o
+JOIN productos p
+	ON o.producto_id = p.producto_id
+JOIN categoria c
+	ON p.categoria_id = c.categoria_id
+GROUP BY c.categoria, p.producto_id
+ORDER BY c.categoria, media_cantidad DESC;
+
+6. 
+tabla clientes: cliente_id, nombre_completo
+tabla pedidos: pedido_id, importe, cliente_id
+Ranking de clientes según su gasto total ordenado de mayor a menor
+
+SELECT
+	c.cliente_id,
+	c.nombre_completo,
+	SUM(p.importe)
+FROM clientes c
+JOIN pedidos p
+	ON c.cliente_id = p.cliente_id
+GROUP BY c.cliente_id, c.nombre_completo
+ORDER BY SUM(p.importe) DESC;
+
+7. tabla clientes: cliente_id, nombre_completo
+tabla pedidos: pedido_id, importe, cliente_id
+
+Cantidad de pedidos realizados por cada cliente.
+
+SELECT
+	c.cliente_id,
+	c.nombre_completo,
+	COUNT(*) AS cantidad_pedidos
+FROM clientes c
+JOIN pedidos p
+	ON c.cliente_id = p.cliente_id
+GROUP BY c.cliente_id, c.nombre_completo
+ORDER BY COUNT(*) DESC
+LIMIT 5; --top 5 gastones
+
+7.1 tabla clientes: cliente_id, nombre_completo
+tabla pedidos: pedido_id, fecha, importe, cliente_id
+Muestra el importe total de los pedidos de cada cliente para los meses entre junio
+y septiembre del año 2024
+
+--------FORMATO FECHAS: YYYY-MM-DD
+--------	YEAR()
+	MONTH()
+	DAY()
+
+-- Si quiero mostrar la información según el mes exacto
+SELECT
+	c.cliente_id,
+	c.nombre_completo,
+	MONTH(p.fecha) AS mes
+	SUM(p.importe) AS suma_total
+FROM clientes c
+JOIN pedidos p
+	ON c.cliente_id = p.cliente_id
+WHERE p.fecha BETWEEN '2024-06-01' AND '2024-09-30'
+GROUP BY c.cliente_id, c.nombre_completo, mes
+ORDER BY suma_total DESC;
+
+--Si quiero mostrar la información para el conjunto del periodo
+SELECT
+	c.cliente_id,
+	c.nombre_completo,
+	SUM(p.importe) AS suma_total
+FROM clientes c
+JOIN pedidos p
+	ON c.cliente_id = p.cliente_id
+WHERE p.fecha BETWEEN '2024-06-01' AND '2024-09-30'
+GROUP BY c.cliente_id, c.nombre_completo
+ORDER BY suma_total DESC;
+
+8.tabla clientes: cliente_id, nombre_completo
+tabla pedidos: pedido_id, fecha, importe, cliente_id
+tabla pedido_producto: pedido_id, producto_id, cantidad
+tabla productos: producto_id, producto
+
+Lista los productos que han sido pedidos por más de un cliente distinto,
+para los meses entre junio y septiembre del año 2024
+ 
+ 
+SELECT
+	p.producto_id,
+	p.producto,
+	COUNT(DISTINCT pe.cliente_id) AS clientes_distintos
+FROM productos p
+JOIN pedido_producto pp
+	ON p.producto_id = pp.producto_id
+JOIN pedidos pe
+	ON pp.pedido_id = pe.pedido_id
+WHERE YEAR(pe.fecha) = 2024
+	AND MONTH(pe.fecha) BETWEEN 6 AND 9
+GROUP BY p.producto_id, p.
+HAVING COUNT(DISTINCT pe.cliente_id) > 1
+ 
+
+SELECT
+	p.producto_id,
+	p.producto,
+	COUNT(DISTINCT pe.cliente_id) AS clientes_distintos
+FROM productos p
+JOIN pedido_producto pp
+	ON p.producto_id = pp.producto_id
+JOIN pedidos pe
+	ON pp.pedido_id = pe.pedido_id
+WHERE YEAR(pe.fecha) = 2024
+	AND MONTH(pe.fecha) >= 6 AND MONTH(pe.fecha) <= 9
+GROUP BY p.producto_id, p.
+HAVING COUNT(DISTINCT pe.cliente_id) > 1;

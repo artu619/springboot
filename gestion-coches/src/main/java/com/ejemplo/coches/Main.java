@@ -44,8 +44,8 @@ public class Main {
                     // Solicitar los detalles del coche
                 	System.out.print("Introduce la matrícula: ");
                     String matricula = scanner.nextLine();
-                    if (matricula.length() < 1 || matricula.length() > 6) {
-                        System.err.println("Error: La matrícula debe tener entre 1 y 6 caracteres o no puede estar en blanco.");
+                    if (matricula.length() < 1 || matricula.length() > 10) {
+                        System.err.println("Error: La matrícula debe tener entre 1 y 10 caracteres o no puede estar en blanco.");
                         break;
                     }
                     System.out.print("Introduce la marca: ");

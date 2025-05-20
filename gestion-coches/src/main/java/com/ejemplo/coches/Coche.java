@@ -18,8 +18,8 @@ public class Coche {
      * @throws IllegalArgumentException si la matrícula no cumple con la longitud válida.
      */
     public Coche(String matricula, String marca, String modelo, int kilometros) {
-    	if (matricula == null || matricula.length() < 1 || matricula.length() > 6) {
-            throw new IllegalArgumentException("Error: La matrícula debe tener entre 1 y 6 caracteres o no puede estar en blanco.");
+    	if (matricula == null || matricula.length() < 1 || matricula.length() > 10) {
+            throw new IllegalArgumentException("Error: La matrícula debe tener entre 1 y 10 caracteres o no puede estar en blanco.");
         }
 
         this.matricula = matricula;
