@@ -28,7 +28,7 @@ public class Main {
         System.out.println("--------------------------");
         while (running) {
             // Mostrar el menú
-            System.out.println("\n1. Añadir Coche");
+            System.out.println("\n1. Añadir Coche1");
             System.out.println("2. Listar Coches");
             System.out.println("3. Ordenar Coches por Marca");
             System.out.println("4. Ordenar Coches por Matrícula");
